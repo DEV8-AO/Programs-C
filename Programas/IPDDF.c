@@ -8,12 +8,13 @@
 #define TAM_NOME 50
 #define TAM_BI 20
 
-typedef struct {
+typedef struct
+{
     int matricula;
     char nome[TAM_NOME];
     int classe;
     int idade;
-    int curso;   
+    int curso;
     int propinas[11];
     char bi[TAM_BI];
 } Aluno;
@@ -29,69 +30,96 @@ void reset() { printf("\033[0m"); }
 void ciano() { printf("\033[1;36m"); }
 
 /* ================= FUNCOES DE VALIDACAO ================= */
-void limpar_buffer() {
+void limpar_buffer()
+{
     int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
 }
 
-int eh_numero(const char *str) {
-    if (str == NULL || *str == '\0') return 0;
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (!isdigit((unsigned char)str[i])) return 0;
+int eh_numero(const char *str)
+{
+    if (str == NULL || *str == '\0')
+        return 0;
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        if (!isdigit((unsigned char)str[i]))
+            return 0;
     }
     return 1;
 }
 
-int eh_nome_valido(const char *str) {
-    if (str == NULL || *str == '\0') return 0;
+int eh_nome_valido(const char *str)
+{
+    if (str == NULL || *str == '\0')
+        return 0;
     int tem_letra = 0;
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (isalpha((unsigned char)str[i])) {
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        if (isalpha((unsigned char)str[i]))
+        {
             tem_letra = 1;
-        } else if (!isspace((unsigned char)str[i])) {
+        }
+        else if (!isspace((unsigned char)str[i]))
+        {
             return 0;
         }
     }
     return tem_letra;
 }
 
-int eh_bi_valido(const char *str) {
-    if (str == NULL || *str == '\0' || strlen(str) < 5 || strlen(str) > 19) return 0;
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (!isdigit((unsigned char)str[i])) return 0;
+int eh_bi_valido(const char *str)
+{
+    if (str == NULL || *str == '\0' || strlen(str) < 5 || strlen(str) > 19)
+        return 0;
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        if (!isdigit((unsigned char)str[i]))
+            return 0;
     }
     return 1;
 }
 
-int ler_inteiro() {
+int ler_inteiro()
+{
     char buffer[100];
-    while (1) {
-        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+    while (1)
+    {
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL)
+        {
             printf("Erro de leitura. Tente novamente: ");
             continue;
         }
         buffer[strcspn(buffer, "\n")] = '\0';
-        if (eh_numero(buffer)) {
+        if (eh_numero(buffer))
+        {
             return atoi(buffer);
-        } else {
+        }
+        else
+        {
             printf("Entrada invalida. Digite apenas numeros: ");
         }
     }
 }
 
-void ler_string(char *destino, int max_len) {
+void ler_string(char *destino, int max_len)
+{
     char buffer[256];
-    while (1) {
-        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+    while (1)
+    {
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL)
+        {
             printf("Erro de leitura. Tente novamente: ");
             continue;
         }
         buffer[strcspn(buffer, "\n")] = '\0';
-        if (strlen(buffer) == 0) {
+        if (strlen(buffer) == 0)
+        {
             printf("Campo nao pode estar vazio. Tente novamente: ");
             continue;
         }
-        if (strlen(buffer) >= (size_t)max_len) {
+        if (strlen(buffer) >= (size_t)max_len)
+        {
             printf("Texto muito longo. Maximo %d caracteres: ", max_len - 1);
             continue;
         }
@@ -100,9 +128,12 @@ void ler_string(char *destino, int max_len) {
     }
 }
 
-int bi_existe(const char *bi) {
-    for (int i = 0; i < total; i++) {
-        if (strcmp(alunos[i].bi, bi) == 0) {
+int bi_existe(const char *bi)
+{
+    for (int i = 0; i < total; i++)
+    {
+        if (strcmp(alunos[i].bi, bi) == 0)
+        {
             return 1;
         }
     }
@@ -110,7 +141,8 @@ int bi_existe(const char *bi) {
 }
 
 /* ================= LOGO KEA ================= */
-void logo() {
+void logo()
+{
     ciano();
     printf("\t\t\t\t '***''  '***''    '*********''     '**********''\n");
     printf("\t\t\t\t '***'' '***''     '*********''    '************''\n");
@@ -124,7 +156,8 @@ void logo() {
 }
 
 /* ================= MENUS ================= */
-void menu_principal() {
+void menu_principal()
+{
     ciano();
     printf("\n\t\t\t\t\t()------------------------------------()");
     printf("\n\t\t\t\t\t''        SISTEMA DE PAGAMENTOS       ''");
@@ -139,7 +172,8 @@ void menu_principal() {
     reset();
 }
 
-void menu_registros() {
+void menu_registros()
+{
     system("cls");
     printf("\n");
     printf("\t\t\t\t\t()----------------------------()\n");
@@ -154,7 +188,8 @@ void menu_registros() {
     printf("\t\t\t\t\tEscolha: ");
 }
 
-void menu_precario() {
+void menu_precario()
+{
     system("cls");
     printf("\n");
     printf("\t\t\t\t\t()----------------------------()\n");
@@ -168,7 +203,8 @@ void menu_precario() {
     printf("\t\t\t\t\tEscolha: ");
 }
 
-void menu_listagem() {
+void menu_listagem()
+{
     system("cls");
     printf("\n");
     printf("\t\t\t\t\t()-----------------------------------------------()\n");
@@ -183,7 +219,8 @@ void menu_listagem() {
     printf("\t\t\t\t\tEscolha: ");
 }
 
-void menu_estatistica() {
+void menu_estatistica()
+{
     system("cls");
     printf("\n");
     printf("\t\t\t\t\t()----------------------------()\n");
@@ -198,9 +235,11 @@ void menu_estatistica() {
 }
 
 /* ================= CURSO E CLASSE ================= */
-int escolher_curso() {
+int escolher_curso()
+{
     int op;
-    do {
+    do
+    {
         ciano();
         printf("\n====================================");
         printf("\n        SELECIONE O CURSO");
@@ -215,16 +254,19 @@ int escolher_curso() {
         reset();
         printf("\nEscolha (1 a 6): ");
         op = ler_inteiro();
-        if(op < 1 || op > 6) {
+        if (op < 1 || op > 6)
+        {
             printf("\nOpcao invalida! Tente novamente.\n");
         }
-    } while(op < 1 || op > 6);
+    } while (op < 1 || op > 6);
     return op;
 }
 
-int escolher_classe() {
+int escolher_classe()
+{
     int op;
-    do {
+    do
+    {
         printf("\n====================================");
         printf("\n        SELECIONE A CLASSE");
         printf("\n====================================");
@@ -237,12 +279,13 @@ int escolher_classe() {
         printf("\n===================================\n");
         printf("Escolha (1 a 6): ");
         op = ler_inteiro();
-    } while(op < 1 || op > 6);
+    } while (op < 1 || op > 6);
     return op + 7;
 }
 
 /* ================= PRECARIO ================= */
-void definir_precario() {
+void definir_precario()
+{
     int curso;
     float valor;
     curso = escolher_curso();
@@ -253,7 +296,8 @@ void definir_precario() {
     system("pause");
 }
 
-void atualizar_precario() {
+void atualizar_precario()
+{
     int curso;
     float valor;
     curso = escolher_curso();
@@ -265,7 +309,8 @@ void atualizar_precario() {
     system("pause");
 }
 
-void consultar_precario() {
+void consultar_precario()
+{
     system("cls");
     ciano();
     printf("\n===== CONSULTA DO PRECARIO =====\n");
@@ -279,24 +324,35 @@ void consultar_precario() {
     system("pause");
 }
 
-void precario() {
+void precario()
+{
     int escolhap;
-    do {
+    do
+    {
         menu_precario();
         escolhap = ler_inteiro();
-        switch(escolhap) {
-            case 1: definir_precario(); break;
-            case 2: atualizar_precario(); break;
-            case 3: consultar_precario(); break;
-            case 0: return;
-            default:
-                printf("\nOpcao invalida!\n");
+        switch (escolhap)
+        {
+        case 1:
+            definir_precario();
+            break;
+        case 2:
+            atualizar_precario();
+            break;
+        case 3:
+            consultar_precario();
+            break;
+        case 0:
+            return;
+        default:
+            printf("\nOpcao invalida!\n");
         }
-    } while(escolhap != 0);
+    } while (escolhap != 0);
 }
 
 /* ================= FUNCIONALIDADES ================= */
-int encontrar() {
+int encontrar()
+{
     int mat;
     char bi[TAM_BI];
     int escolha;
@@ -307,18 +363,24 @@ int encontrar() {
     printf("Escolha: ");
     escolha = ler_inteiro();
 
-    if(escolha == 1) {
+    if (escolha == 1)
+    {
         printf("\nDigite a matricula: ");
         mat = ler_inteiro();
-        for(int i = 0; i < total; i++) {
-            if(alunos[i].matricula == mat) return i;
+        for (int i = 0; i < total; i++)
+        {
+            if (alunos[i].matricula == mat)
+                return i;
         }
     }
-    else if(escolha == 2) {
+    else if (escolha == 2)
+    {
         printf("\nDigite o numero do BI: ");
         ler_string(bi, TAM_BI);
-        for(int i = 0; i < total; i++) {
-            if(strcmp(alunos[i].bi, bi) == 0) return i;
+        for (int i = 0; i < total; i++)
+        {
+            if (strcmp(alunos[i].bi, bi) == 0)
+                return i;
         }
     }
 
@@ -326,8 +388,10 @@ int encontrar() {
 }
 
 /* ================= CADASTRO COM VALIDACAO ================= */
-void cadastrar() {
-    if (total >= MAX) {
+void cadastrar()
+{
+    if (total >= MAX)
+    {
         printf("\nLimite atingido!\n");
         system("pause");
         return;
@@ -338,10 +402,12 @@ void cadastrar() {
 
     // Nome
     char temp_nome[TAM_NOME];
-    do {
+    do
+    {
         printf("\nNome do aluno: ");
         ler_string(temp_nome, TAM_NOME);
-        if (!eh_nome_valido(temp_nome)) {
+        if (!eh_nome_valido(temp_nome))
+        {
             printf("Nome invalido! Use apenas letras e espacos.\n");
         }
     } while (!eh_nome_valido(temp_nome));
@@ -351,10 +417,12 @@ void cadastrar() {
 
     // Idade
     int idade;
-    do {
+    do
+    {
         printf("\nIdade (5 a 100): ");
         idade = ler_inteiro();
-        if (idade < 5 || idade > 100) {
+        if (idade < 5 || idade > 100)
+        {
             printf("Idade fora do intervalo permitido!\n");
         }
     } while (idade < 5 || idade > 100);
@@ -364,24 +432,30 @@ void cadastrar() {
 
     // BI
     char temp_bi[TAM_BI];
-    do {
+    do
+    {
         printf("\nInsira o BI (apenas numeros): ");
         ler_string(temp_bi, TAM_BI);
-        if (!eh_bi_valido(temp_bi)) {
+        if (!eh_bi_valido(temp_bi))
+        {
             printf("BI invalido! Use apenas numeros (5 a 19 digitos).\n");
-        } else if (bi_existe(temp_bi)) {
+        }
+        else if (bi_existe(temp_bi))
+        {
             printf("Este BI ja esta cadastrado!\n");
         }
     } while (!eh_bi_valido(temp_bi) || bi_existe(temp_bi));
     strcpy(a.bi, temp_bi);
 
     // Inicializa propinas como nao pagas
-    for (int i = 0; i < 11; i++) a.propinas[i] = 0;
+    for (int i = 0; i < 11; i++)
+        a.propinas[i] = 0;
 
     alunos[total++] = a;
 
     printf("\n");
-    for(int i = 0; i < 50; i++) printf("*");
+    for (int i = 0; i < 50; i++)
+        printf("*");
     printf("\nAluno cadastrado com sucesso!");
     printf("\nMatricula: %d\n", a.matricula);
     system("pause");
@@ -389,52 +463,73 @@ void cadastrar() {
 }
 
 /* ================= ATUALIZAR PROPINAS ================= */
-void atualizar_propinas() {
+void atualizar_propinas()
+{
     system("cls");
     printf("\n");
 
     int idx = -1;
     int busca_tipo;
-    do {
+    do
+    {
         printf("\nBuscar aluno por:\n1 - Matricula\n2 - BI\n0 - Voltar\nEscolha: ");
         busca_tipo = ler_inteiro();
-        if (busca_tipo == 0) return;
-        
-        if (busca_tipo == 1) {
+        if (busca_tipo == 0)
+            return;
+
+        if (busca_tipo == 1)
+        {
             printf("\nDigite a matricula: ");
             int mat = ler_inteiro();
-            for (int i = 0; i < total; i++) {
-                if (alunos[i].matricula == mat) { idx = i; break; }
+            for (int i = 0; i < total; i++)
+            {
+                if (alunos[i].matricula == mat)
+                {
+                    idx = i;
+                    break;
+                }
             }
-        } else if (busca_tipo == 2) {
+        }
+        else if (busca_tipo == 2)
+        {
             char bi_busca[TAM_BI];
             printf("\nDigite o BI: ");
             ler_string(bi_busca, TAM_BI);
-            for (int i = 0; i < total; i++) {
-                if (strcmp(alunos[i].bi, bi_busca) == 0) { idx = i; break; }
+            for (int i = 0; i < total; i++)
+            {
+                if (strcmp(alunos[i].bi, bi_busca) == 0)
+                {
+                    idx = i;
+                    break;
+                }
             }
-        } else {
+        }
+        else
+        {
             printf("Opcao invalida!\n");
         }
     } while (idx == -1);
 
-    if (idx == -1) {
+    if (idx == -1)
+    {
         printf("\nAluno nao encontrado!\n");
         system("pause");
         return;
     }
 
-    char *meses[11] = {"Setembro","Outubro","Novembro","Dezembro","Janeiro",
-                       "Fevereiro","Marco","Abril","Maio","Junho","Julho"};
+    char *meses[11] = {"Setembro", "Outubro", "Novembro", "Dezembro", "Janeiro",
+                       "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho"};
 
     int op;
-    do {
+    do
+    {
         system("cls");
         ciano();
         printf("\nPropinas de %s\n\n", alunos[idx].nome);
         reset();
-        for(int i = 0; i < 11; i++) {
-            printf("%d - %s [%s]\n", i+1, meses[i],
+        for (int i = 0; i < 11; i++)
+        {
+            printf("%d - %s [%s]\n", i + 1, meses[i],
                    alunos[idx].propinas[i] ? "PAGO" : "NAO PAGO");
         }
         printf("\n12 - Anular pagamento de um mes");
@@ -442,138 +537,183 @@ void atualizar_propinas() {
         printf("\nEscolha: ");
         op = ler_inteiro();
 
-        if(op >= 1 && op <= 11) {
+        if (op >= 1 && op <= 11)
+        {
             int permitido = 1;
-            for(int k = 0; k < op-1; k++) {
-                if(alunos[idx].propinas[k] == 0) {
+            for (int k = 0; k < op - 1; k++)
+            {
+                if (alunos[idx].propinas[k] == 0)
+                {
                     permitido = 0;
                     break;
                 }
             }
-            if(permitido) {
+            if (permitido)
+            {
                 alunos[idx].propinas[op - 1] = 1;
-                printf("\nPagamento do mes %s registrado!\n", meses[op-1]);
-            } else {
-                printf("\nNao e possivel pagar %s antes de quitar os meses anteriores!\n", meses[op-1]);
+                printf("\nPagamento do mes %s registrado!\n", meses[op - 1]);
+            }
+            else
+            {
+                printf("\nNao e possivel pagar %s antes de quitar os meses anteriores!\n", meses[op - 1]);
             }
             system("pause");
         }
-        else if(op == 12) {
+        else if (op == 12)
+        {
             printf("\nDigite o numero do mes para anular (1 a 11): ");
             int mes = ler_inteiro();
-            if(mes >= 1 && mes <= 11) {
-                for(int j = mes-1; j < 11; j++) {
+            if (mes >= 1 && mes <= 11)
+            {
+                for (int j = mes - 1; j < 11; j++)
+                {
                     alunos[idx].propinas[j] = 0;
                 }
-                printf("\nPagamento de %s e meses seguintes foram anulados!\n", meses[mes-1]);
-            } else {
+                printf("\nPagamento de %s e meses seguintes foram anulados!\n", meses[mes - 1]);
+            }
+            else
+            {
                 printf("\nMes invalido!\n");
             }
             system("pause");
         }
-        else if(op != 0) {
+        else if (op != 0)
+        {
             printf("\nOpcao invalida!\n");
             system("pause");
         }
-    } while(op != 0);
+    } while (op != 0);
     system("cls");
 }
 
 /* ================= LISTAGENS ================= */
-void listar_meses_aluno() {
+void listar_meses_aluno()
+{
     int idx = encontrar();
-    if(idx == -1) {
+    if (idx == -1)
+    {
         printf("\nAluno nao encontrado!\n");
-        system("pause"); return;
+        system("pause");
+        return;
     }
-    char *meses[11] = {"Setembro","Outubro","Novembro","Dezembro","Janeiro",
-                       "Fevereiro","Marco","Abril","Maio","Junho","Julho"};
+    char *meses[11] = {"Setembro", "Outubro", "Novembro", "Dezembro", "Janeiro",
+                       "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho"};
     printf("\nMeses pagos:\n");
-    for(int i=0;i<11;i++) if(alunos[idx].propinas[i]==1) printf(" - %s\n", meses[i]);
+    for (int i = 0; i < 11; i++)
+        if (alunos[idx].propinas[i] == 1)
+            printf(" - %s\n", meses[i]);
     printf("\nMeses em atraso:\n");
-    for(int i=0;i<11;i++) if(alunos[idx].propinas[i]==0) printf(" - %s\n", meses[i]);
+    for (int i = 0; i < 11; i++)
+        if (alunos[idx].propinas[i] == 0)
+            printf(" - %s\n", meses[i]);
     system("pause");
 }
 
-void listar_por_mes() {
-    char *meses[11] = {"Setembro","Outubro","Novembro","Dezembro","Janeiro",
-                       "Fevereiro","Marco","Abril","Maio","Junho","Julho"};
+void listar_por_mes()
+{
+    char *meses[11] = {"Setembro", "Outubro", "Novembro", "Dezembro", "Janeiro",
+                       "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho"};
     printf("\nDigite o numero do mes (1-11): ");
     int mes = ler_inteiro();
-    if(mes < 1 || mes > 11) {
+    if (mes < 1 || mes > 11)
+    {
         printf("\nMes invalido!\n");
         system("pause");
         return;
     }
-    printf("\nAlunos em atraso no mes %s:\n", meses[mes-1]);
-    for(int i=0;i<total;i++) {
-        if(alunos[i].propinas[mes-1]==0) {
+    printf("\nAlunos em atraso no mes %s:\n", meses[mes - 1]);
+    for (int i = 0; i < total; i++)
+    {
+        if (alunos[i].propinas[mes - 1] == 0)
+        {
             printf(" - %s (Matricula %d)\n", alunos[i].nome, alunos[i].matricula);
         }
     }
     system("pause");
 }
 
-void listar_por_classe_curso() {
+void listar_por_classe_curso()
+{
     printf("\nListar por:\n1 - Classe\n2 - Curso\nEscolha: ");
     int tipo = ler_inteiro();
-    if(tipo==1) {
+    if (tipo == 1)
+    {
         int classe;
-        do {
+        do
+        {
             printf("\nDigite a classe (8-13): ");
             classe = ler_inteiro();
-        } while(classe < 8 || classe > 13);
+        } while (classe < 8 || classe > 13);
         printf("\nAlunos da classe %d com mensalidades em atraso:\n", classe);
-        for(int i=0;i<total;i++) {
-            if(alunos[i].classe==classe) {
-                for(int j=0;j<11;j++) if(alunos[i].propinas[j]==0) {
-                    printf(" - %s (Matricula %d)\n", alunos[i].nome, alunos[i].matricula);
-                    break;
-                }
+        for (int i = 0; i < total; i++)
+        {
+            if (alunos[i].classe == classe)
+            {
+                for (int j = 0; j < 11; j++)
+                    if (alunos[i].propinas[j] == 0)
+                    {
+                        printf(" - %s (Matricula %d)\n", alunos[i].nome, alunos[i].matricula);
+                        break;
+                    }
             }
         }
-    } else if(tipo==2) {
-        int curso=escolher_curso();
+    }
+    else if (tipo == 2)
+    {
+        int curso = escolher_curso();
         printf("\nAlunos do curso %d com mensalidades em atraso:\n", curso);
-        for(int i=0;i<total;i++) {
-            if(alunos[i].curso==curso) {
-                for(int j=0;j<11;j++) if(alunos[i].propinas[j]==0) {
-                    printf(" - %s (Matricula %d)\n", alunos[i].nome, alunos[i].matricula);
-                    break;
-                }
+        for (int i = 0; i < total; i++)
+        {
+            if (alunos[i].curso == curso)
+            {
+                for (int j = 0; j < 11; j++)
+                    if (alunos[i].propinas[j] == 0)
+                    {
+                        printf(" - %s (Matricula %d)\n", alunos[i].nome, alunos[i].matricula);
+                        break;
+                    }
             }
         }
     }
     system("pause");
 }
 
-void listar_meses_todos() {
-    char *meses[11] = {"Setembro","Outubro","Novembro","Dezembro","Janeiro",
-                       "Fevereiro","Marco","Abril","Maio","Junho","Julho"};
-    for(int i=0;i<total;i++) {
+void listar_meses_todos()
+{
+    char *meses[11] = {"Setembro", "Outubro", "Novembro", "Dezembro", "Janeiro",
+                       "Fevereiro", "Marco", "Abril", "Maio", "Junho", "Julho"};
+    for (int i = 0; i < total; i++)
+    {
         printf("\nAluno: %s (Matricula %d)\n", alunos[i].nome, alunos[i].matricula);
         printf("Meses pagos: ");
-        for(int j=0;j<11;j++) if(alunos[i].propinas[j]==1) printf("%s ", meses[j]);
+        for (int j = 0; j < 11; j++)
+            if (alunos[i].propinas[j] == 1)
+                printf("%s ", meses[j]);
         printf("\nMeses em atraso: ");
-        for(int j=0;j<11;j++) if(alunos[i].propinas[j]==0) printf("%s ", meses[j]);
+        for (int j = 0; j < 11; j++)
+            if (alunos[i].propinas[j] == 0)
+                printf("%s ", meses[j]);
         printf("\n-------------------------------------\n");
     }
     system("pause");
 }
 
 /* ================= ATUALIZAR ALUNO ================= */
-void atualizar_aluno() {
+void atualizar_aluno()
+{
     system("cls");
     printf("\n");
 
-    if(total == 0) {
+    if (total == 0)
+    {
         printf("\nNenhum aluno cadastrado.\n");
         system("pause");
         return;
     }
 
     int idx = encontrar();
-    if(idx == -1) {
+    if (idx == -1)
+    {
         printf("\nAluno nao encontrado!\n");
         system("pause");
         return;
@@ -588,10 +728,14 @@ void atualizar_aluno() {
     printf("\nNovo nome (ENTER para manter): ");
     fgets(novoNome, sizeof(novoNome), stdin);
     novoNome[strcspn(novoNome, "\n")] = 0;
-    if(strlen(novoNome) > 0) {
-        if(eh_nome_valido(novoNome)) {
+    if (strlen(novoNome) > 0)
+    {
+        if (eh_nome_valido(novoNome))
+        {
             strcpy(a->nome, novoNome);
-        } else {
+        }
+        else
+        {
             printf("Nome invalido! Mantendo nome atual.\n");
         }
     }
@@ -599,29 +743,36 @@ void atualizar_aluno() {
     printf("\nIdade atual: %d\n", a->idade);
     printf("Nova idade (0 para manter): ");
     int novaIdade = ler_inteiro();
-    if(novaIdade > 0 && novaIdade >= 5 && novaIdade <= 100) {
+    if (novaIdade > 0 && novaIdade >= 5 && novaIdade <= 100)
+    {
         a->idade = novaIdade;
     }
 
     printf("\nClasse atual: %d\n", a->classe);
     printf("Deseja atualizar classe? (1=Sim / 0=Nao): ");
     int op = ler_inteiro();
-    if(op == 1) a->classe = escolher_classe();
+    if (op == 1)
+        a->classe = escolher_classe();
 
     printf("\nCurso atual: %d\n", a->curso);
     printf("Deseja atualizar curso? (1=Sim / 0=Nao): ");
     op = ler_inteiro();
-    if(op == 1) a->curso = escolher_curso();
+    if (op == 1)
+        a->curso = escolher_curso();
 
     printf("\nBI atual: %s\n", a->bi);
     printf("Novo BI (ENTER para manter): ");
     char novoBI[TAM_BI];
     fgets(novoBI, sizeof(novoBI), stdin);
     novoBI[strcspn(novoBI, "\n")] = 0;
-    if(strlen(novoBI) > 0) {
-        if(eh_bi_valido(novoBI) && !bi_existe(novoBI)) {
+    if (strlen(novoBI) > 0)
+    {
+        if (eh_bi_valido(novoBI) && !bi_existe(novoBI))
+        {
             strcpy(a->bi, novoBI);
-        } else {
+        }
+        else
+        {
             printf("BI invalido ou ja existente! Mantendo BI atual.\n");
         }
     }
@@ -631,10 +782,12 @@ void atualizar_aluno() {
 }
 
 /* ================= ESTATISTICAS ================= */
-void estatisticas() {
+void estatisticas()
+{
     system("cls");
     printf("\n");
-    if(total == 0) {
+    if (total == 0)
+    {
         printf("\nNenhum aluno cadastrado.\n");
         system("pause");
         return;
@@ -644,18 +797,22 @@ void estatisticas() {
     int cursos[7] = {0};
     int em_dia = 0;
 
-    for(int i = 0; i < total; i++) {
+    for (int i = 0; i < total; i++)
+    {
         soma_idades += alunos[i].idade;
         cursos[alunos[i].curso]++;
-        
+
         int todasPagas = 1;
-        for(int j = 0; j < 11; j++) {
-            if(alunos[i].propinas[j] == 0) {
+        for (int j = 0; j < 11; j++)
+        {
+            if (alunos[i].propinas[j] == 0)
+            {
                 todasPagas = 0;
                 break;
             }
         }
-        if(todasPagas) em_dia++;
+        if (todasPagas)
+            em_dia++;
     }
 
     float media_idade = (float)soma_idades / total;
@@ -675,20 +832,25 @@ void estatisticas() {
     system("pause");
 }
 
-void listar_em_falta() {
+void listar_em_falta()
+{
     system("cls");
     int encontrados = 0;
 
-    for(int i = 0; i < total; i++) {
+    for (int i = 0; i < total; i++)
+    {
         int falta = 0;
-        for(int j = 0; j < 11; j++) {
-            if(alunos[i].propinas[j] == 0) {
+        for (int j = 0; j < 11; j++)
+        {
+            if (alunos[i].propinas[j] == 0)
+            {
                 falta = 1;
                 break;
             }
         }
 
-        if(falta) {
+        if (falta)
+        {
             encontrados++;
             printf("\n-------------------------------------");
             printf("\nMatricula : %d", alunos[i].matricula);
@@ -696,14 +858,28 @@ void listar_em_falta() {
             printf("\nClasse    : %d", alunos[i].classe);
             printf("\nIdade     : %d", alunos[i].idade);
             char *cursoNome;
-            switch(alunos[i].curso) {
-                case 1: cursoNome = "Tecnico de Informatica"; break;
-                case 2: cursoNome = "Bioquimica"; break;
-                case 3: cursoNome = "Electricistas"; break;
-                case 4: cursoNome = "Mecanica"; break;
-                case 5: cursoNome = "Desenhador Projetista"; break;
-                case 6: cursoNome = "Ensino Geral"; break;
-                default: cursoNome = "Indefinido";
+            switch (alunos[i].curso)
+            {
+            case 1:
+                cursoNome = "Tecnico de Informatica";
+                break;
+            case 2:
+                cursoNome = "Bioquimica";
+                break;
+            case 3:
+                cursoNome = "Electricistas";
+                break;
+            case 4:
+                cursoNome = "Mecanica";
+                break;
+            case 5:
+                cursoNome = "Desenhador Projetista";
+                break;
+            case 6:
+                cursoNome = "Ensino Geral";
+                break;
+            default:
+                cursoNome = "Indefinido";
             }
             printf("\nCurso     : %s", cursoNome);
             printf("\nSituacao  : EM FALTA");
@@ -711,7 +887,8 @@ void listar_em_falta() {
         }
     }
 
-    if(encontrados == 0) {
+    if (encontrados == 0)
+    {
         printf("\nTodos os alunos estao com propinas em dia!\n");
     }
 
@@ -719,80 +896,112 @@ void listar_em_falta() {
 }
 
 /* ================= CONTROLE ================= */
-void programa_com_logo() {
-    while(1) {
+void programa_com_logo()
+{
+    while (1)
+    {
         menu_principal();
         int escolha1 = ler_inteiro();
         system("cls");
 
-        if(escolha1 == 1) {
+        if (escolha1 == 1)
+        {
             menu_registros();
             int escolha2 = ler_inteiro();
-            if(escolha2 == 1) cadastrar();
-            else if(escolha2 == 2) atualizar_propinas();
-            else if(escolha2 == 3) precario();
-            else if(escolha2 == 4) atualizar_aluno();
+            if (escolha2 == 1)
+                cadastrar();
+            else if (escolha2 == 2)
+                atualizar_propinas();
+            else if (escolha2 == 3)
+                precario();
+            else if (escolha2 == 4)
+                atualizar_aluno();
         }
-        else if(escolha1 == 2) {
+        else if (escolha1 == 2)
+        {
             menu_listagem();
             int escolha2 = ler_inteiro();
-            if(escolha2 == 1) listar_meses_aluno();
-            else if(escolha2 == 2) listar_por_mes();
-            else if(escolha2 == 3) listar_por_classe_curso();
-            else if(escolha2 == 4) listar_meses_todos();
+            if (escolha2 == 1)
+                listar_meses_aluno();
+            else if (escolha2 == 2)
+                listar_por_mes();
+            else if (escolha2 == 3)
+                listar_por_classe_curso();
+            else if (escolha2 == 4)
+                listar_meses_todos();
         }
-        else if(escolha1 == 3) {
+        else if (escolha1 == 3)
+        {
             menu_estatistica();
             int escolha2 = ler_inteiro();
-            if(escolha2 == 1) estatisticas();
-            else if(escolha2 == 2) listar_em_falta();
+            if (escolha2 == 1)
+                estatisticas();
+            else if (escolha2 == 2)
+                listar_em_falta();
         }
-        else if(escolha1 == 0) {
+        else if (escolha1 == 0)
+        {
             system("cls");
             printf("Encerrando o sistema...");
             exit(0);
         }
-        else {
+        else
+        {
             printf("\nOpcao invalida!\n");
             system("pause");
         }
     }
 }
 
-void programa() {
+void programa()
+{
     menu_principal();
     int escolha1 = ler_inteiro();
     system("cls");
-    if(escolha1 == 1){
+    if (escolha1 == 1)
+    {
         menu_registros();
         int escolha2 = ler_inteiro();
-        if(escolha2 == 1) cadastrar();
-        else if(escolha2 == 2) atualizar_propinas();
-        else if(escolha2 == 3) precario();
+        if (escolha2 == 1)
+            cadastrar();
+        else if (escolha2 == 2)
+            atualizar_propinas();
+        else if (escolha2 == 3)
+            precario();
         programa_com_logo();
     }
-    else if(escolha1 == 2) {
+    else if (escolha1 == 2)
+    {
         menu_listagem();
         int escolha2 = ler_inteiro();
-        if(escolha2 == 1) listar_meses_aluno();
-        else if(escolha2 == 2) listar_por_mes();
-        else if(escolha2 == 3) listar_por_classe_curso();
-        else if(escolha2 == 4) listar_meses_todos();
+        if (escolha2 == 1)
+            listar_meses_aluno();
+        else if (escolha2 == 2)
+            listar_por_mes();
+        else if (escolha2 == 3)
+            listar_por_classe_curso();
+        else if (escolha2 == 4)
+            listar_meses_todos();
         programa_com_logo();
     }
-    else if(escolha1 == 3) {
+    else if (escolha1 == 3)
+    {
         menu_estatistica();
         int escolha2 = ler_inteiro();
-        if(escolha2 == 1) estatisticas();
-        else if(escolha2 == 2) listar_em_falta();
+        if (escolha2 == 1)
+            estatisticas();
+        else if (escolha2 == 2)
+            listar_em_falta();
         programa_com_logo();
     }
-    else if(escolha1 == 0) {
+    else if (escolha1 == 0)
+    {
         system("cls");
         printf("Encerrando o sistema...");
         exit(0);
     }
-    else {
+    else
+    {
         printf("\nOpcao invalida!\n");
         system("pause");
         programa_com_logo();
@@ -800,12 +1009,13 @@ void programa() {
 }
 
 /* ================= MAIN ================= */
-int main() {
+int main()
+{
     system("cls");
     printf("\nCarregando sistema...\n");
     system("pause");
     system("cls");
-    logo(); 
+    logo();
     programa();
     return 0;
 }
